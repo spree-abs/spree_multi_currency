@@ -1,7 +1,6 @@
 # Spree Multi-Currency
 
-[![Build Status](https://travis-ci.org/matthewkennedy/spree_multi_currency.svg?branch=master)](https://travis-ci.org/matthewkennedy/spree_multi_currency)
-[![Code Climate](https://codeclimate.com/github/matthewkennedy/spree_multi_currency/badges/gpa.svg)](https://codeclimate.com/github/matthewkennedy/spree_multi_currency)
+[![Build Status](https://travis-ci.org/MatthewKennedy/spree_multi_currency.svg?branch=master)](https://travis-ci.org/MatthewKennedy/spree_multi_currency)
 
 Provides UI to allow configuring multiple currencies in Spree.
 
