@@ -4,6 +4,12 @@ en:
     master: Master
     prices: Prices
     currencies: Currencies
+    currency_rule:
+      label: Choose currency
+    promotion_rule_types:
+      currency:
+        description: Order currency meets this criteria
+        name: Currency
     supported_currencies:
       short: Supported Currencies
       long: A comma separated list of supported currencies
