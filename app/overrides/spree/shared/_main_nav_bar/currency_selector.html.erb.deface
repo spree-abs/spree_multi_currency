@@ -1,4 +1,4 @@
-<!-- insert_bottom '#main-nav-bar > .navbar-right' -->
+<!-- insert_bottom '#main-nav-bar > .navbar-right' original 'cc5e3ebef76fdc940c3f2c5c1e6a2f0c0224233c' -->
 <% if Spree::Config[:allow_currency_change] && Spree::Config[:show_currency_selector] && supported_currencies.size > 1 %>
   <li id="currency-select" data-hook>
     <%= form_tag set_currency_path(format: :html), class: 'navbar-form' do %>
