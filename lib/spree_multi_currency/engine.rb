@@ -15,6 +15,10 @@ module SpreeMultiCurrency
       ApplicationController.send :include, Spree::CurrencyHelpers
     end
 
+    initializer "spree.register.promotions" do |app|
+      app.config.spree.promotions.rules << Spree::Promotion::Rules::Currency
+    end
+
     config.to_prepare(&method(:activate).to_proc)
   end
 end
