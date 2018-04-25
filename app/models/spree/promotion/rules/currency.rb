@@ -9,7 +9,7 @@ module Spree
         end
 
         def eligible?(order, options = {})
-          order.currency == preferred_currency
+          order.currency.eql? preferred_currency
         end
       end
     end
