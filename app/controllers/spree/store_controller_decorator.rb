@@ -3,11 +3,10 @@ module Spree
     before_action :set_locale
 
     def set_locale
-
-      euro_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
-
-      if (cookies[:returning].blank?)
-          if locale == I18n.default_locale && request.location.country_code.present? && !browser.bot?
+        euro_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
+        if (cookies[:returning].blank?)
+# If website is set to default location and the users country code is not nill and is not a bot.
+          if locale == I18n.default_locale && !request.location.country_code.nil? && !browser.bot?
 
             if euro_countries.include? request.location.country_code.to_s
               visitor_location = 'EUR'
