@@ -4,8 +4,10 @@ module Spree
 
     def set_locale
         euro_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
+        # Only Run code once so that user can change currency if they wish
         if (cookies[:returning].blank?)
-# If website is set to default location and the users country code is not nill and is not a bot.
+
+# START If website is set to default location and the users country code is not nill and is not a bot.
           if locale == I18n.default_locale && !request.location.country_code.nil? && !browser.bot?
 
             if euro_countries.include? request.location.country_code.to_s
@@ -44,7 +46,7 @@ module Spree
                 current_order.update_attributes!(currency: @currency.iso_code) if @currency && current_order
                 session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
               end
-
+# Else respond to the url local and set currency to match
           elsif locale == :'en-GB'
             params[:currency] = "GBP"
             @currency = supported_currencies.find { |currency| currency.iso_code == params[:currency] }
@@ -70,7 +72,6 @@ module Spree
             session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
           end
       end
-
 
       if params[:currency].present?
         @currency = supported_currencies.find { |currency| currency.iso_code == params[:currency] }
