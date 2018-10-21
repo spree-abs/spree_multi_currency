@@ -4,7 +4,7 @@ module Spree
 
     def set_locale
 
-      # List the countires that you want to default to the Euro € on first pageload.
+      # List the countires by ISO Code that you would like to use Euros on first pageload.
       euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY',
                          'CZ', 'DK', 'EE', 'FI', 'FR',
                          'DE', 'EL', 'HU', 'IE', 'IT',
