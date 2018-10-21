@@ -14,50 +14,53 @@ module Spree
       # Only run the code once on first pageload, allowing the user to change the store currency if they wish.
       if (cookies[:geo_currency].blank?)
 
-
           if locale == I18n.default_locale && !request.location.country_code.nil? && !browser.bot?
           # If the website is loaded with the default language loacls, and the visitor has a country code, and the visitor is not a bot.
+              # Test if the visitor is located in a Euro Zone country (EZ)
+              if euro_zone_countries.include? request.location.country_code.to_s
+                visitor_location = "EZ"
+                else
+                visitor_location = request.location.country_code
+              end
 
-                  # Test if the visitor is located in a Euro Zone country (EZ)
-                  if euro_zone_countries.include? request.location.country_code.to_s
-                    visitor_location = "EZ"
-                    else
-                    visitor_location = request.location.country_code
-                  end
-
-                  if      visitor_location == "EZ"
-                                params[:currency] = "EUR"
-                    elsif visitor_location == "GB"
-                                params[:currency] = "GBP"
-                    elsif visitor_location == "AU"
-                                params[:currency] = "AUD"
-                    elsif visitor_location == "CA"
-                                params[:currency] = "CAD"
-                    else
-                                params[:currency] = "USD"
-                  end
+              case visitor_location
+                when 'EZ'
+                  params[:currency] = "EUR"
+                when 'GB'
+                  params[:currency] = "GBP"
+                when 'AU'
+                  params[:currency] = "AUD"
+                when 'CA'
+                  params[:currency] = "CAD"
+                else
+                  params[:currency] = "USD"
+              end
 
             # Else check for language locals and set currency appropriatly
-            elsif locale == :'de'
-              params[:currency] = "EUR"
-            elsif locale == :'fr'
-              params[:currency] = "EUR"
-            elsif locale == :'it'
-              params[:currency] = "EUR"
-            elsif locale == :'es'
-              params[:currency] = "EUR"
-            elsif locale == :'sv'
-              params[:currency] = "EUR"
-            elsif locale == :'en-GB'
-              params[:currency] = "GBP"
-            elsif locale == :'en-AU'
-              params[:currency] = "AUD"
-            elsif locale == :'en-CA'
-              params[:currency] = "CAD"
-            elsif locale == :'en-US'
-              params[:currency] = "USD"
+          else
+              case locale
+                when :'de'
+                  params[:currency] = "EUR"
+                when :'fr'
+                  params[:currency] = "EUR"
+                when :'it'
+                  params[:currency] = "EUR"
+                when :'es'
+                  params[:currency] = "EUR"
+                when :'sv'
+                  params[:currency] = "EUR"
+                when :'en-GB'
+                  params[:currency] = "GBP"
+                when :'en-AU'
+                  params[:currency] = "AUD"
+                when :'en-CA'
+                  params[:currency] = "CAD"
+                when :'en-US'
+                  params[:currency] = "USD"
+                else
+                  params[:currency] = "USD"
+              end
           end
-          
           (cookies[:geo_currency] = params[:currency])
       end
 
