@@ -24,10 +24,12 @@ module Spree
                     params[:currency] = visitor_location
                     elsif visitor_location == "GB"
                       params[:currency] = "GBP"
-                    elsif @visitor_location == "AU"
+                    elsif visitor_location == "AU"
                       params[:currency] = "AUD"
-                    elsif @visitor_location == "CA"
+                    elsif visitor_location == "CA"
                       params[:currency] = "CAD"
+                    else
+                      params[:currency] = "USD"
                   end
             # Else respond to the url local and set currency to match
             elsif locale == :'en-GB'
