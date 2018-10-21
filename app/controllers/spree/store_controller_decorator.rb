@@ -39,15 +39,7 @@ module Spree
             # Else check for language locals and set currency appropriatly
           else
               case locale
-                when :'de'
-                  params[:currency] = "EUR"
-                when :'fr'
-                  params[:currency] = "EUR"
-                when :'it'
-                  params[:currency] = "EUR"
-                when :'es'
-                  params[:currency] = "EUR"
-                when :'sv'
+                when :'de', :'fr', :'it', :'es', :'sv'
                   params[:currency] = "EUR"
                 when :'en-GB'
                   params[:currency] = "GBP"
