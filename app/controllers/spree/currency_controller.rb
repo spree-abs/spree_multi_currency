@@ -11,7 +11,7 @@ module Spree
           # We want to go back to where we came from!
           redirect_back_or_default(root_path)
         end
-        (cookies[:customer_preffered_currency] = params[:currency])
+        (cookies[:customer_preffered_currency] = { value: params[:currency], expires: 1.year.from_now} )
       end
     end
   end

@@ -2,26 +2,32 @@ module Spree
   StoreController.class_eval do
     before_action :set_locale
 
-    def set_locale
-      # List the countires by ISO Code that you would like to use Euros on first pageload.
-      euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY',
-                         'CZ', 'DK', 'EE', 'FI', 'FR',
-                         'DE', 'EL', 'HU', 'IE', 'IT',
-                         'LU', 'MT', 'NL', 'PL', 'PT',
-                         'RO', 'SK', 'SI', 'ES', 'SV' ]
+# START set_locale
+def set_locale
+# START set_locale
 
-      cf_visitor_country_code = request.headers["CF-IPCountry"].to_s
+      # IF the visitor has previously set a prefered currency, then set the store to use the visitors preffered currency.
+      if (!cookies[:customer_preffered_currency].blank?) && (cookies[:customer_preffered_currency_returing_set].blank?) && (cookies[:customer_preffered_currency]) != current_currency
 
-      # Only run the code once on first pageload, allowing the user to change the store currency if they wish.
-      if (cookies[:geo_currency].blank?)
+          params[:currency] = (cookies[:customer_preffered_currency]).to_s
+          (cookies[:customer_preffered_currency_returing_set] = 'true')
+      end
 
+      # Only run the code below once, or no at all if the visitor has already set a prefered currency.
+      if (cookies[:geo_currency].blank?) && (cookies[:customer_preffered_currency].blank?)
+
+          # Define a list of countires that use Euros.
+          euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL',
+                                        'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
+
+          # IF the store is loaded with I18n.default_locale, and the visitor is not a bot.
           if locale == I18n.default_locale && !browser.bot?
-          # If the website is loaded with the default language loacls, and the visitor has a country code, and the visitor is not a bot.
-              # Test if the visitor is located in a Euro Zone country (EZ)
-              if euro_zone_countries.include? cf_visitor_country_code
+
+              # IF the visitor is located in a Euro Zone country (EZ)
+              if euro_zone_countries.include? request.headers["CF-IPCountry"].to_s
                 visitor_location = "EZ"
                 else
-                visitor_location = cf_visitor_country_code
+                visitor_location = request.headers["CF-IPCountry"].to_s
               end
 
               case visitor_location
@@ -37,7 +43,7 @@ module Spree
                   params[:currency] = "USD"
               end
 
-            # Else check for language locals and set currency appropriatly
+          # ELSE check for language locale in the URL and set currency appropriately
           else
               case locale
                 when :'de', :'fr', :'it', :'es', :'sv'
@@ -57,12 +63,16 @@ module Spree
           (cookies[:geo_currency] = params[:currency])
       end
 
-      if params[:currency].present?
-        @currency = supported_currencies.find { |currency| currency.iso_code == params[:currency] }
-        current_order.update_attributes!(currency: @currency.iso_code) if @currency && current_order
-        session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
-      end
-    end
+  # Switches the currency based on the paremeters given.
+  if params[:currency].present?
+    @currency = supported_currencies.find { |currency| currency.iso_code == params[:currency] }
+    current_order.update_attributes!(currency: @currency.iso_code) if @currency && current_order
+    session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
+  end
+
+# END set_locale
+end
+# END set_locale
 
   end
 end
