@@ -3,7 +3,6 @@ module Spree
     before_action :set_locale
 
     def set_locale
-
       # List the countires by ISO Code that you would like to use Euros on first pageload.
       euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY',
                          'CZ', 'DK', 'EE', 'FI', 'FR',
@@ -11,16 +10,18 @@ module Spree
                          'LU', 'MT', 'NL', 'PL', 'PT',
                          'RO', 'SK', 'SI', 'ES', 'SV' ]
 
+      cf_visitor_country_code = request.headers["CF-IPCountry"].to_s
+
       # Only run the code once on first pageload, allowing the user to change the store currency if they wish.
       if (cookies[:geo_currency].blank?)
 
-          if locale == I18n.default_locale && !request.location.country_code.nil? && !browser.bot?
+          if locale == I18n.default_locale && !browser.bot?
           # If the website is loaded with the default language loacls, and the visitor has a country code, and the visitor is not a bot.
               # Test if the visitor is located in a Euro Zone country (EZ)
-              if euro_zone_countries.include? request.location.country_code.to_s
+              if euro_zone_countries.include? cf_visitor_country_code
                 visitor_location = "EZ"
                 else
-                visitor_location = request.location.country_code
+                visitor_location = cf_visitor_country_code
               end
 
               case visitor_location
