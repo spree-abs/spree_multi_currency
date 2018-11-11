@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   StoreController.class_eval do
     before_action :set_locale
