@@ -14,9 +14,9 @@ This provides 3 preferences:
 ## Improvements Over The Standard Version
 This version of the extension reads geo location and also uses language defined urls from the Spree Globalize extension to set the currency for certain regions and user locations.
 
-### Requires CloudFlare
-
+### Requires CloudFlare.
 To function correctly this extension relies on CloudFlare and the IP Geolocation setting to be switched on. By reading the current browsers location from the CF-IPCountry header.
+
 ---
 
 ### Requires spree_globalize extension.
