@@ -1,4 +1,4 @@
-# Spree Multi-Currency
+# Spree Multi-Currency With Location Detection
 
 [![Build Status](https://travis-ci.org/MatthewKennedy/spree_multi_currency.svg?branch=master)](https://travis-ci.org/MatthewKennedy/spree_multi_currency)
 
@@ -10,26 +10,26 @@ This provides 3 preferences:
 * show_currency_selector - Display the currency selector in the main nav bar.  This will only display if there are multiple supported currencies, and allow_currency_change is on.
 * supported_currencies - A comma separated list of
 
+
+## Improvements Over The Standard Version
+This version of the extension reads geo location and also uses language defined urls from the Spree Globalize extension to set the currency for certain regions and user locations.
+
+### Requires CloudFlare
+To function correctly this extension relies on CloudFlare and the IP Geolocation setting to be switched on. By reading the current browsers location from the CF-IPCountry header.
 ---
+
+### Requires spree_globalize extension.
+To set currency depending on local.
 
 ## Installation
 
-1. Add this extension to your Gemfile with this line:
-
-  #### Spree >= 3.1
+1. Add this extension to your Gemfile with these lines:
 
   ```ruby
-  gem 'spree_multi_currency', github: 'matthewkennedy/spree_multi_currency'
+  gem 'spree_i18n', github: 'spree-contrib/spree_i18n'
+  gem 'spree_globalize', github: 'spree-contrib/spree_globalize'
+  gem 'spree_multi_currency', github: 'spree-kit/spree_multi_currency'
   ```
-
-  #### Spree 3.0 and Spree 2.x
-
-  ```ruby
-  gem 'spree_multi_currency', github: 'matthewkennedy/spree_multi_currency', branch: 'X-X-stable'
-  ```
-
-  The `branch` option is important: it must match the version of Spree you're using.
-  For example, use `3-0-stable` if you're using Spree `3-0-stable` or any `3.0.x` version.
 
 2. Install the gem using Bundler:
   ```ruby
@@ -38,6 +38,7 @@ This provides 3 preferences:
 
 3. Copy & run migrations
   ```ruby
+  bundle exec rails g spree_globalize:install
   bundle exec rails g spree_multi_currency:install
   ```
 
@@ -52,13 +53,3 @@ This provides 3 preferences:
 See corresponding [guidelines][1]
 
 ---
-
-## License
-
-Copyright (c) 2007-2015 [Gregor MacDougall][5], [Spree Commerce][2], and other [contributors][3], released under the [New BSD License][4]
-
-[1]: https://github.com/matthewkennedy/spree_multi_currency/blob/master/CONTRIBUTING.md
-[2]: https://github.com/spree
-[3]: https://github.com/matthewkennedy/spree_multi_currency/contributors
-[4]: https://github.com/matthewkennedy/spree_multi_currency/blob/master/LICENSE.md
-[5]: https://github.com/freerunningtech
