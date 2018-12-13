@@ -29,7 +29,7 @@ def set_locale
                                         'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
 
           # IF the store is loaded with I18n.default_locale, and the visitor is not a bot.
-          if locale == I18n.default_locale && !browser.bot?
+          if current_store.code == 'spree' && !browser.bot?
 
               # IF the visitor is located in a Euro Zone country (EZ)
               if euro_zone_countries.include? request.headers["CF-IPCountry"].to_s
