@@ -10,7 +10,7 @@ module Spree
                   Spree::Config[:currency] = 'EUR'
                 when 'GBP'
                   Spree::Config[:currency] = 'GBP'
-                when 'else'
+                when 'USD'
                   Spree::Config[:currency] = 'USD'
               end
         end
