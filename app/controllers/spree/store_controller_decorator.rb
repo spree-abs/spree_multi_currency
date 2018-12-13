@@ -14,8 +14,6 @@ def set_locale
         #end
       #end
 
-      
-
       # IF the visitor has previously set a prefered currency, then set the store to use the visitors preffered currency.
       if (!cookies[:customer_preffered_currency].blank?) && (cookies[:customer_preffered_currency_returing_set].blank?) && (cookies[:customer_preffered_currency]) != current_currency
 
@@ -45,28 +43,18 @@ def set_locale
                   params[:currency] = "EUR"
                 when 'GB'
                   params[:currency] = "GBP"
-                when 'AU'
-                  params[:currency] = "AUD"
-                when 'CA'
-                  params[:currency] = "CAD"
                 else
                   params[:currency] = "USD"
               end
 
           # ELSE check for language locale in the URL and set currency appropriately
           else
-              case locale
-                when :'de', :'fr', :'it', :'es', :'sv'
+              case current_store.code
+                when 'EUR'
                   params[:currency] = "EUR"
-                when :'en-GB'
+                when 'GBP'
                   params[:currency] = "GBP"
-                when :'en-AU'
-                  params[:currency] = "AUD"
-                when :'en-CA'
-                  params[:currency] = "CAD"
-                when :'en-US'
-                  params[:currency] = "USD"
-                else
+                when 'USD'
                   params[:currency] = "USD"
               end
           end
