@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'spree_backend', '>= 3.1.0', '< 4.0'
   s.add_runtime_dependency 'spree_extension'
-  s.add_runtime_dependency 'browser'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'capybara'
