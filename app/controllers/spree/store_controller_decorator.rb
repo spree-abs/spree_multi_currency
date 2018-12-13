@@ -58,7 +58,7 @@ def set_locale
                   params[:currency] = "USD"
               end
           end
-          (cookies[:geo_currency] = params[:currency])
+          #(cookies[:geo_currency] = params[:currency])
       end
 
   # Switches the currency based on the paremeters given.
