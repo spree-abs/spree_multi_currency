@@ -1,33 +1,15 @@
 # frozen_string_literal: true
-
 module Spree
   StoreController.class_eval do
     before_action :set_locale
 
-# START set_locale
-def set_locale
+      def set_locale
+        # Define a list of countires that use Euros.
+        euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL',
+                              'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
 
-      #ToDo Set order currency to match current currency check.
-      #if current_order
-        #if current_order.currency != current_currency
-          #params[:currency] = current_currency
-        #end
-      #end
-
-      # IF the visitor has previously set a prefered currency, then set the store to use the visitors preffered currency.
-      if (!cookies[:customer_preffered_currency].blank?) && (cookies[:customer_preffered_currency_returing_set].blank?) && (cookies[:customer_preffered_currency]) != current_currency
-
-          params[:currency] = (cookies[:customer_preffered_currency]).to_s
-          (cookies[:customer_preffered_currency_returing_set] = 'true')
-      end
-
-      # Only run the code below once, or no at all if the visitor has already set a prefered currency.
-      if (cookies[:geo_currency].blank?) && (cookies[:customer_preffered_currency].blank?)
-
-          # Define a list of countires that use Euros.
-          euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL',
-                                        'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
-
+        if current_store.code != current_currency
+          
           # IF the store is loaded with default store code, and the visitor is not a bot.
           if current_store.code == 'spree' && !browser.bot?
 
@@ -40,36 +22,26 @@ def set_locale
 
               case visitor_location
                 when 'EZ'
-                  Spree::Config[:currency] = "EUR"
+                  Spree::Config[:currency] = 'EUR'
                 when 'GB'
-                  params[:currency] = "GBP"
+                  Spree::Config[:currency] = 'GBP'
                 else
-                  params[:currency] = "USD"
+                  Spree::Config[:currency] = 'USD'
               end
 
           # ELSE check for CURRENCY in STORE CODE
           else
               case current_store.code
                 when 'EUR'
-                  Spree::Config[:currency] = "EUR"
+                  Spree::Config[:currency] = 'EUR'
                 when 'GBP'
-                  params[:currency] = "GBP"
+                  Spree::Config[:currency] = 'GBP'
                 else
-                  params[:currency] = "USD"
+                  Spree::Config[:currency] = 'USD'
               end
           end
-          #(cookies[:geo_currency] = params[:currency])
-      end
-
-  # Switches the currency based on the paremeters given.
-  if params[:currency].present?
-    @currency = supported_currencies.find { |currency| currency.iso_code == params[:currency] }
-    current_order.update_attributes!(currency: @currency.iso_code) if @currency && current_order
-    session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
-  end
-
-end
-# END set_locale
+        end
+    end
 
   end
 end
