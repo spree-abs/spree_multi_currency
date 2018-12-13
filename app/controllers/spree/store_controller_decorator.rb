@@ -28,7 +28,7 @@ def set_locale
           euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL',
                                         'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
 
-          # IF the store is loaded with I18n.default_locale, and the visitor is not a bot.
+          # IF the store is loaded with default store code, and the visitor is not a bot.
           if current_store.code == 'spree' && !browser.bot?
 
               # IF the visitor is located in a Euro Zone country (EZ)
@@ -40,21 +40,21 @@ def set_locale
 
               case visitor_location
                 when 'EZ'
-                  params[:currency] = "EUR"
+                  Spree::Config[:currency] = "EUR"
                 when 'GB'
                   params[:currency] = "GBP"
                 else
                   params[:currency] = "USD"
               end
 
-          # ELSE check for language locale in the URL and set currency appropriately
+          # ELSE check for CURRENCY in STORE CODE
           else
               case current_store.code
                 when 'EUR'
-                  params[:currency] = "EUR"
+                  Spree::Config[:currency] = "EUR"
                 when 'GBP'
                   params[:currency] = "GBP"
-                when 'USD'
+                else
                   params[:currency] = "USD"
               end
           end
