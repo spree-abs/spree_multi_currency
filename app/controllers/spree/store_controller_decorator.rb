@@ -4,6 +4,7 @@ module Spree
     before_action :set_locale
 
       def set_locale
+
         # Define a list of countires that use Euros.
         euro_zone_countries = [ 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL',
                               'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
@@ -41,6 +42,7 @@ module Spree
               end
           end
         end
+        
     end
 
   end
