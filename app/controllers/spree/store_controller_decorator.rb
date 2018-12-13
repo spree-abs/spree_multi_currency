@@ -9,9 +9,9 @@ module Spree
                               'HU', 'IE', 'IT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SV' ]
 
         if current_store.code != current_currency
-          
-          # IF the store is loaded with default store code, and the visitor is not a bot.
-          if current_store.code == 'spree' && !browser.bot?
+
+          # IF the store is loaded with the default store code, and the visitor is not a bot and the geo code has not been set.
+          if current_store.code == 'spree' && !browser.bot? && (cookies[:cf_geo_currency].blank?)
 
               # IF the visitor is located in a Euro Zone country (EZ)
               if euro_zone_countries.include? request.headers["CF-IPCountry"].to_s
@@ -28,7 +28,7 @@ module Spree
                 else
                   Spree::Config[:currency] = 'USD'
               end
-
+              (cookies[:cf_geo_currency] = current_currency)
           # ELSE check for CURRENCY in STORE CODE
           else
               case current_store.code
