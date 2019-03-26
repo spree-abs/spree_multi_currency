@@ -5,7 +5,7 @@ module Spree
 
       def set_locale
         if current_store.code != current_currency
-                  Spree::Config[:currency] = current_store.code
+          Spree::Config[:currency] = current_store.code
         end
       end
 
