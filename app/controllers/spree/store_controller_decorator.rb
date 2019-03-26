@@ -5,14 +5,7 @@ module Spree
 
       def set_locale
         if current_store.code != current_currency
-              case current_store.code
-                when 'EUR'
-                  Spree::Config[:currency] = 'EUR'
-                when 'GBP'
-                  Spree::Config[:currency] = 'GBP'
-                when 'USD'
-                  Spree::Config[:currency] = 'USD'
-              end
+                  Spree::Config[:currency] = current_store.code
         end
       end
 
